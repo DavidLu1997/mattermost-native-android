@@ -46,4 +46,33 @@ public class User {
     public String locale;
     public Boolean mfaActive;
     public String mfaSecret;
+
+    public User(String id, Integer createAt, Integer updateAt, Integer deleteAt, String userName, String password, String authData, String authService, String email, Boolean emailVerified, String nickName, String firstName, String lastName, String roles, Integer lastActivityAt, Integer lastPingAt, Boolean allowMarketing, Map<String, String> props, Map<String, String> notifyProps, Map<String, String> themeProps, Integer lastPasswordUpdate, Integer lastPictureUpdate, Integer failedAttempts, String locale, Boolean mfaActive, String mfaSecret) {
+        Id = id;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.deleteAt = deleteAt;
+        this.userName = userName;
+        this.password = password;
+        this.authData = authData;
+        this.authService = authService;
+        this.email = email;
+        this.emailVerified = emailVerified;
+        this.nickName = nickName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roles = roles;
+        this.lastActivityAt = lastActivityAt;
+        this.lastPingAt = lastPingAt;
+        this.allowMarketing = allowMarketing;
+        this.props = props;
+        this.notifyProps = notifyProps;
+        this.themeProps = themeProps;
+        this.lastPasswordUpdate = lastPasswordUpdate;
+        this.lastPictureUpdate = lastPictureUpdate;
+        this.failedAttempts = failedAttempts;
+        this.locale = locale;
+        this.mfaActive = mfaActive;
+        this.mfaSecret = mfaSecret;
+    }
 }
