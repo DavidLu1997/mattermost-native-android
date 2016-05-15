@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
+    private AutoCompleteTextView mServerView;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        mServerView = (AutoCompleteTextView) findViewById(R.id.server);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -149,31 +151,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
+        mServerView.setError(null);
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
+        String server = mServerView.getText().toString();
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        // Check for a valid server URL.
+        if (!TextUtils.isEmpty(server) && !isServerValid(server)) {
+            mServerView.setError(getString(R.string.error_invalid_server));
+            focusView = mServerView;
             cancel = true;
         }
 
@@ -185,19 +178,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(server, email, password);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+    private boolean isServerValid(String server) {
+        //TODO: Replace with validation
+        return server.contains(".");
     }
 
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+    private String checkServer(String server) {
+        //TODO: Check http and https
+        return server;
     }
 
     /**
@@ -296,34 +289,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mServer;
+        private final String mUsername;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String server, String username, String password) {
+            mServer = server;
+            mUsername = username;
             mPassword = password;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            //TODO: Attempt Mattermost authorization
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+                if (pieces[0].equals(mUsername)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
             }
 
-            // TODO: register the new account here.
             return true;
         }
 
