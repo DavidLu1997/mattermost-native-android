@@ -9,9 +9,9 @@ import java.util.Map;
  */
 public class Team {
     public String id;
-    public Integer createAt;
-    public Integer updateAt;
-    public Integer deleteAt;
+    public Long createAt;
+    public Long updateAt;
+    public Long deleteAt;
     public String displayName;
     public String name;
     public String email;
@@ -21,7 +21,7 @@ public class Team {
     public String inviteId;
     public Boolean allowOpenInvite;
 
-    public Team(String id, Integer createAt, Integer updateAt, Integer deleteAt, String displayName, String name, String email, String type, String companyName, String allowedDomains, String inviteId, Boolean allowOpenInvite) {
+    public Team(String id, Long createAt, Long updateAt, Long deleteAt, String displayName, String name, String email, String type, String companyName, String allowedDomains, String inviteId, Boolean allowOpenInvite) {
         this.id = id;
         this.createAt = createAt;
         this.updateAt = updateAt;
@@ -54,6 +54,11 @@ public class Team {
     public String etag() {
         //TODO: Etag
         return null;
+    }
+
+    public String isValid(Boolean restrictTeamNames) {
+        //TODO: Validity checks
+        return "";
     }
 
     private class Invites {
